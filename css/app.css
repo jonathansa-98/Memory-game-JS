@@ -1,40 +1,163 @@
+/*@import url('https://fonts.googleapis.com/css?family=Pacifico');
+font-family: 'Pacifico', cursive;*/
+/*@import url('https://fonts.googleapis.com/css?family=Gloria+Hallelujah');
+font-family: 'Gloria Hallelujah', cursive;*/
+@import url('https://fonts.googleapis.com/css?family=Permanent+Marker');
+/*font-family: 'Permanent Marker', cursive;*/
+
 body{
 	background-image: url("../img/fondo.png");
 	background-repeat: repeat;
 	background-size: 200px 200px;
+	font-family: 'Permanent Marker', cursive;
 }
 
 .container{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-bottom: 100px;
 }
 
 .score-panel{
 	font-size: 120%;
+	margin-bottom: 1em;
 }
 
 .restart{
 	margin-left: 20px;
-	margin-bottom: 1em;
-}
-
-.card {
-	background-color: #2E2E2E;
-	border-radius: 7px;
-	margin: 10px;
 	cursor: pointer;
-	box-shadow: 5px 7px 13px 0 rgba(45, 58, 68, 0.5);
 }
 
+/* Style for deck*/
 .deck {
 	background-color: #8F8F8F;
+	color: white;
 	width: 500px;
-	height: 500px;
+	height: 375px;
 	display: grid;
 	padding: 10px;
 	border-radius: 10px;
 	grid-template-columns: repeat(4, minmax(50px,1fr));
 	box-shadow: 8px 9px 26px 0 rgba(45, 58, 68, 0.5);
+}
+
+.card {
+	background-color: #2E2E2E;
+	border-radius: 5px;
+	margin: 10px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 3rem;
+	box-shadow: 5px 7px 13px 0 rgba(45, 58, 68, 0.5);
+}
+
+/*style for card events*/
+.deck .card.open {
+	transform: rotateY(0);
+	background: #02b3e4;
+	cursor: default;
+	animation-name: flipInY;
+	-webkit-backface-visibility: visible !important;
+	backface-visibility: visible !important;
+	animation-duration: .75s;
+}
+
+.deck .card.show {
+	font-size: 33px;
+}
+
+.deck .card.match {
+	cursor: default;
+	background: #E5F720;
+	font-size: 33px;
+	animation-name: rubberBand;
+	-webkit-backface-visibility: visible !important;
+	backface-visibility: visible !important;
+	animation-duration: .75s;
+}
+
+.deck .card.unmatched {
+	animation-name: pulse;
+	-webkit-backface-visibility: visible !important;
+	backface-visibility: visible !important;
+	animation-duration: .75s;
+	background: #e2043b;
+}
+
+.deck .card.disabled {
+	pointer-events: none;
+	opacity: 0.9;
+}
+
+/* animations */
+@keyframes flipInY {
+	from {
+		transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+		animation-timing-function: ease-in;
+		opacity: 0;
+	}
+
+	40% {
+		transform: perspective(400px) rotate3d(0, 1, 0, -20deg);
+		animation-timing-function: ease-in;
+	}
+
+	60% {
+		transform: perspective(400px) rotate3d(0, 1, 0, 10deg);
+		opacity: 1;
+	}
+
+	80% {
+		transform: perspective(400px) rotate3d(0, 1, 0, -5deg);
+	}
+
+	to {
+		transform: perspective(400px);
+	}
+}
+
+@keyframes rubberBand {
+	from {
+		transform: scale3d(1, 1, 1);
+	}
+
+	30% {
+		transform: scale3d(1.25, 0.75, 1);
+	}
+
+	40% {
+		transform: scale3d(0.75, 1.25, 1);
+	}
+
+	50% {
+		transform: scale3d(1.15, 0.85, 1);
+	}
+
+	65% {
+		transform: scale3d(.95, 1.05, 1);
+	}
+
+	75% {
+		transform: scale3d(1.05, .95, 1);
+	}
+
+	to {
+		transform: scale3d(1, 1, 1);
+	}
+}
+
+@keyframes pulse {
+	from {
+		transform: scale3d(1, 1, 1);
+	}
+
+	50% {
+		transform: scale3d(1.2, 1.2, 1.2);
+	}
+
+	to {
+		transform: scale3d(1, 1, 1);
+	}
 }
