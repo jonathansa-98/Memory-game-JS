@@ -5,6 +5,7 @@ function Card(id, img) {
 }
 /*************************************/
 
+var deck = document.querySelector('.deck');
 var cards = document.querySelectorAll('.card');
 var moves = document.querySelector('.moves');
 var cards_matched = [];
@@ -25,7 +26,14 @@ function startTimer(){
     },1000);
 }
 
-cards.forEach(card => card.addEventListener('click', function(e) {
+deck.addEventListener('click', e=>{
+    var card = e.target;
+    if(card.classList.contains('card')){
+        checkCard(card);
+    }
+});
+
+function checkCard(card) {
     openCard(card);
     cards_matched.push(card);
     if (cards_matched.length % 2 == 0) {
@@ -44,7 +52,7 @@ cards.forEach(card => card.addEventListener('click', function(e) {
         }
         moveCounter();
     }
-}));
+}
 
 function moveCounter(){
     var move = parseInt(moves.innerHTML)+1;
@@ -123,19 +131,19 @@ function higlightUnmatchedCards(card1, card2){
 
 // disable cards temporarily
 function disable(){
-    Array.prototype.filter.call(cards, function(card){
+    for (var card of cards) {
         card.classList.add('disabled');
-    });
+    }
 }
 
 // enable cards and disable matched cards
 function enable(){
-    Array.prototype.filter.call(cards, function(card){
+    for (var card of cards) {
         card.classList.remove('disabled');
         for(var i = 0; i < cards_matched.length; i++){
             cards_matched[i].classList.add("disabled");
         }
-    });
+    }
 }
 
 function cardsMatch(card1, card2) {
@@ -155,4 +163,4 @@ function congratulations(){
 }
 
 /* Executing*/
-startGame();
+window.onload = startGame();

@@ -56,6 +56,10 @@ body{
 	box-shadow: 5px 7px 13px 0 rgba(45, 58, 68, 0.5);
 }
 
+.card i{
+	pointer-events: none;
+}
+
 /*style for card events*/
 .deck .card.open {
 	transform: rotateY(0);
@@ -90,7 +94,6 @@ body{
 
 .deck .card.disabled {
 	pointer-events: none;
-	opacity: 0.9;
 }
 
 /* animations */
