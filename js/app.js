@@ -9,6 +9,21 @@ var cards = document.querySelectorAll('.card');
 var moves = document.querySelector('.moves');
 var cards_matched = [];
 var all_cards = [];
+//game timer
+var second = 0, minute = 0;
+var timer = document.querySelector(".timer");
+var interval;
+
+function startTimer(){
+    interval = setInterval(function(){
+        timer.innerHTML = minute+" mins "+second+" secs";
+        second++;
+        if(second == 60){
+            minute++;
+            second = 0;
+        }
+    },1000);
+}
 
 cards.forEach(card => card.addEventListener('click', function(e) {
     openCard(card);
@@ -19,30 +34,45 @@ cards.forEach(card => card.addEventListener('click', function(e) {
         card1 = card1[0];
         card2 = card2[0];
         if (cardsMatch(card1, card2)) {
-            console.log(cards_matched);
             higlightMatchedCards(card1, card2);
             if (cards_matched.length == all_cards.length) {
-                alert("Has ganado!!");
+                congratulations();
             }
         } else {
             cards_matched.splice(-2, 2);
-            console.log(cards_matched);
             higlightUnmatchedCards(card1, card2);
         }
-        moves.innerHTML = parseInt(moves.innerHTML)+1;
+        moveCounter();
     }
 }));
+
+function moveCounter(){
+    var move = parseInt(moves.innerHTML)+1;
+    moves.innerHTML = move;
+    //start timer on first move
+    if(move == 1){
+        second = 0;
+        minute = 0;
+        hour = 0;
+        startTimer();
+    }
+}
 
 function startGame() {
     restart();
     suffleDeck(all_cards);
-    console.log(all_cards);
 }
 
 function restart() {
     all_cards = [];
     cards_matched = [];
     moves.innerHTML = 0;
+    Array.prototype.filter.call(cards, function(card){
+        card.className = 'card';
+    });
+    // reset timer
+    timer.innerHTML = "0 mins 0 secs";
+    clearInterval(interval);
 }
 
 /* Returns an array sorted randomly with all the icons to put
@@ -112,6 +142,16 @@ function cardsMatch(card1, card2) {
     var id_card1 = parseInt(card1.getAttribute('id'));
     var id_card2 = parseInt(card2.getAttribute('id'));
     return all_cards[id_card1].img === all_cards[id_card2].img;
+}
+
+function congratulations(){
+    clearInterval(interval);
+/*    finalTime = timer.innerHTML;
+    //show congratulations modal
+    modal.classList.add("show");
+    //showing move, time on modal
+    document.getElementById("finalMove").innerHTML = moves.in;
+    document.getElementById("totalTime").innerHTML = finalTime;*/
 }
 
 /* Executing*/

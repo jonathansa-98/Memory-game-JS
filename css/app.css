@@ -23,8 +23,11 @@ body{
 	margin-bottom: 1em;
 }
 
+.timer{
+	margin: 1em 1em;
+}
+
 .restart{
-	margin-left: 20px;
 	cursor: pointer;
 }
 
@@ -70,7 +73,7 @@ body{
 
 .deck .card.match {
 	cursor: default;
-	background: #E5F720;
+	background: #24FF00;
 	animation-name: rubberBand;
 	-webkit-backface-visibility: visible !important;
 	backface-visibility: visible !important;
