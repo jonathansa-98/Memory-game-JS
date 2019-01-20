@@ -20,9 +20,14 @@ cards.forEach(card => card.addEventListener('click', function(e) {
         card2 = card2[0];
         if (cardsMatch(card1, card2)) {
             console.log("bien");
+            console.log(cards_matched);
+            higlightMatchedCards(card1, card2);
         } else {
             console.log("mal");
+            cards_matched.splice(-2, 2);
+            console.log(cards_matched);
         }
+        moves.innerHTML = parseInt(moves.innerHTML)+1;
     }
 }));
 
@@ -56,6 +61,11 @@ function suffleDeck(all_cards) {
 
 function openCard(card) {
     card.className = "card open show disabled";
+}
+
+function higlightMatchedCards(card1, card2) {
+    card1.className = "card match show disabled";
+    card2.className = "card match show disabled";
 }
 
 function cardsMatch(card1, card2) {
