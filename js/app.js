@@ -1,4 +1,4 @@
-/* Card class*/
+/* Card class */
 function Card(id, img) {
     this.id = id;
     this.img = img || "";
@@ -8,12 +8,20 @@ function Card(id, img) {
 var deck = document.querySelector('.deck');
 var cards = document.querySelectorAll('.card');
 var moves = document.querySelector('.moves');
-var cards_matched = [];
 var all_cards = [];
+var cards_matched = [];
 //game timer
 var second = 0, minute = 0;
 var timer = document.querySelector(".timer");
 var interval;
+
+// addEventListener to cards in deck
+deck.addEventListener('click', e=>{
+    var card = e.target;
+    if(card.classList.contains('card')){
+        checkCard(card);
+    }
+});
 
 function startTimer(){
     interval = setInterval(function(){
@@ -26,13 +34,7 @@ function startTimer(){
     },1000);
 }
 
-deck.addEventListener('click', e=>{
-    var card = e.target;
-    if(card.classList.contains('card')){
-        checkCard(card);
-    }
-});
-
+/* Check a card when clicked */
 function checkCard(card) {
     openCard(card);
     cards_matched.push(card);
@@ -54,10 +56,11 @@ function checkCard(card) {
     }
 }
 
+/* Counts moves and starts timer */
 function moveCounter(){
     var move = parseInt(moves.innerHTML)+1;
     moves.innerHTML = move;
-    //start timer on first move
+    // start timer on first move
     if(move == 1){
         second = 0;
         minute = 0;
@@ -70,6 +73,7 @@ function startGame() {
     suffleDeck(all_cards);
 }
 
+/* Reset game */
 function restart() {
     all_cards = [];
     cards_matched = [];
@@ -145,12 +149,14 @@ function enable(){
     }
 }
 
+/* Check the img in 2 cards obj*/
 function cardsMatch(card1, card2) {
     var id_card1 = parseInt(card1.getAttribute('id'));
     var id_card2 = parseInt(card2.getAttribute('id'));
     return all_cards[id_card1].img === all_cards[id_card2].img;
 }
 
+/* Show victory modal*/
 function congratulations(){
     clearInterval(interval);
     var modal = document.getElementById('myModal');
@@ -170,5 +176,5 @@ function congratulations(){
     };
 }
 
-/* Executing*/
+/* Executing */
 window.onload = startGame();
