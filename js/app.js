@@ -61,7 +61,6 @@ function moveCounter(){
     if(move == 1){
         second = 0;
         minute = 0;
-        hour = 0;
         startTimer();
     }
 }
@@ -75,9 +74,9 @@ function restart() {
     all_cards = [];
     cards_matched = [];
     moves.innerHTML = 0;
-    Array.prototype.filter.call(cards, function(card){
+    for (var card of cards) {
         card.className = 'card';
-    });
+    }
     // reset timer
     timer.innerHTML = "0 mins 0 secs";
     clearInterval(interval);
@@ -140,9 +139,9 @@ function disable(){
 function enable(){
     for (var card of cards) {
         card.classList.remove('disabled');
-        for(var i = 0; i < cards_matched.length; i++){
-            cards_matched[i].classList.add("disabled");
-        }
+    }
+    for (var match of cards_matched) {
+        match.classList.add("disabled");
     }
 }
 
@@ -154,12 +153,21 @@ function cardsMatch(card1, card2) {
 
 function congratulations(){
     clearInterval(interval);
-/*    finalTime = timer.innerHTML;
-    //show congratulations modal
-    modal.classList.add("show");
-    //showing move, time on modal
-    document.getElementById("finalMove").innerHTML = moves.in;
-    document.getElementById("totalTime").innerHTML = finalTime;*/
+    var modal = document.getElementById('myModal');
+    var span = document.getElementsByClassName("close")[0];
+    modal.style.display = "block";
+    document.querySelector(".final-timer").innerHTML = timer.innerHTML;
+    document.querySelector(".final-moves").innerHTML = parseInt(moves.innerHTML)+1;
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    };
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
 }
 
 /* Executing*/
